@@ -9,6 +9,8 @@ import android.widget.Toast;
 
 public class QuizActivity extends AppCompatActivity {
 
+    public static final String KEY_INDEX = "index";
+
     private Button mTrueButton;
     private Button mFalseButton;
     private Button mNextButton;
@@ -21,6 +23,12 @@ public class QuizActivity extends AppCompatActivity {
             new Question(R.string.question_americas, true),
             new Question(R.string.question_asia, true),
     };
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(KEY_INDEX, mCurrentIndex);
+    }
 
     private int mCurrentIndex = 0;
 
@@ -68,6 +76,9 @@ public class QuizActivity extends AppCompatActivity {
                 updateQuestion();
             }
         });
+        if (savedInstanceState != null) {
+            mCurrentIndex = savedInstanceState.getInt(KEY_INDEX, 0);
+        }
         updateQuestion();
     }
 }
